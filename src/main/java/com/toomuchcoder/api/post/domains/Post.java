@@ -1,4 +1,4 @@
-package com.toomuchcoder.api.comment.domains;
+package com.toomuchcoder.api.post.domains;
 
 import com.toomuchcoder.api.user.domains.User;
 import lombok.AllArgsConstructor;
@@ -10,32 +10,32 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
- * packageName: com.toomuchcoder.api.comment.domains
- * fileName        : Comment.java
+ * packageName: com.toomuchcoder.api.post.domains
+ * fileName        : Posts.java
  * author          : solyikwon
- * date            : 2022-06-01
+ * date            : 2022-06-03
  * desc            :
  * =============================================
  * DATE              AUTHOR        NOTE
  * =============================================
- * 2022-06-01         solyikwon      최초 생성
+ * 2022-06-03         solyikwon      최초 생성
  **/
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "comments")
-public class Comment {
+@Table(name = "posts")
+public class Post {
     @Id
-    @Column(name = "commentid")
-    @GeneratedValue
-    private Long commentid;
-    @Column private @NotNull String content;
+    @Column(name = "postid")
+    @GeneratedValue private Long commentid;
+    @Column private @NotNull String pimage;
     @Column private @NotNull String time;
+    @Column private @NotNull String likes;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userid")
     User user;
-
 }

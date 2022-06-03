@@ -1,5 +1,6 @@
 package com.toomuchcoder.api.condition.domains;
 
+import com.toomuchcoder.api.user.domains.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,12 +24,16 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "?")
+@Table(name = "conditions")
 public class Condition {
-    @Id @Column(name = "?")
+    @Id @Column(name = "conditionid")
     @GeneratedValue private Long conditionid;
     @Column private String address;
     @Column private String gander;
     @Column private String others;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "userid")
+        User user;
 
 }

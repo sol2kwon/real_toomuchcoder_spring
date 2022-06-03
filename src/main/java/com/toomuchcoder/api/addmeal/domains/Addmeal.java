@@ -1,5 +1,6 @@
 package com.toomuchcoder.api.addmeal.domains;
 
+import com.toomuchcoder.api.user.domains.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,14 +25,19 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "?")
+@Table(name = "addmeals")
 
 public class Addmeal {
     @Id
-    @Column(name = "?")
-    @GeneratedValue private Long username;
-    @Column private @NotNull String timestamp;
-    @Column private @NotNull String userimages;
+    @Column(name = "addmealid")
+    @GeneratedValue private Long addmealid;
+    @Column private String time;
+    @Column private String uimage;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "userid")
+        User user;
+
 
 }
 

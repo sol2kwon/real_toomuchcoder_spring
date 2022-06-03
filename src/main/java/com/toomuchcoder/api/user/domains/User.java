@@ -1,12 +1,16 @@
 package com.toomuchcoder.api.user.domains;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.toomuchcoder.api.addmeal.domains.Addmeal;
+import com.toomuchcoder.api.comment.domains.Comment;
+import com.toomuchcoder.api.condition.domains.Condition;
+import com.toomuchcoder.api.meal.domains.Meal;
+import com.toomuchcoder.api.post.domains.Post;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * packageName: com.toomuchcoder.api.user
@@ -24,14 +28,39 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "?")
+@Table(name = "users")
+@Setter
+@ToString
+
 
 public class User {
-    @Id @Column (name = "?")
-    @GeneratedValue private String username;
+    @Id @Column (name = "userid")
+    @GeneratedValue private long username;
     @Column private @NotNull String name;
     @Column private @NotNull String password;
-    @Column private @NotNull int birth;
+    @Column private @NotNull String birth;
     @Column private @NotNull String phon;
+
+    @OneToMany(mappedBy = "user")
+    List<Meal> meals = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    List<Condition>conditions = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "user")
+    List<Addmeal> addmeals = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    List<Post> posts = new ArrayList<>();
+
+
+
+
+
+
 
 }

@@ -1,5 +1,6 @@
 package com.toomuchcoder.api.meal.domains;
 
+import com.toomuchcoder.api.user.domains.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,13 +24,17 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "?")
+@Table(name = "meals")
 
 public class Meal {
-    @Id @Column(name = "")
+    @Id @Column(name = "mealid")
     @GeneratedValue private Long mealid;
     @Column private String timestamp;
     @Column private String mealimages;
+
+    @ManyToOne(fetch =FetchType.LAZY)
+        @JoinColumn(name = "userid")
+    User user;
 
 
 
