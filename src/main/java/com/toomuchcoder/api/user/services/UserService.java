@@ -1,9 +1,11 @@
 package com.toomuchcoder.api.user.services;
 
+import com.toomuchcoder.api.auth.domain.Messenger;
 import com.toomuchcoder.api.user.domains.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.GetMapping;
 
 
 import java.util.List;
@@ -41,4 +43,12 @@ public interface UserService {
     List<User> findAll(Sort sort);
 
     Page<User> findAll(Pageable pageable);
+
+    //custom
+    List<User> findByUserName(String username);//??레파짓토리랑 똑같아야하는거 아님??
+    Messenger logout();
+
+
+
+
 }
