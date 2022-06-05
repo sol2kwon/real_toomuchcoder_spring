@@ -1,4 +1,4 @@
-package com.toomuchcoder.api.user.domains.controllers;
+package com.toomuchcoder.api.user.controllers;
 
 import com.toomuchcoder.api.user.domains.User;
 import com.toomuchcoder.api.user.services.UserService;

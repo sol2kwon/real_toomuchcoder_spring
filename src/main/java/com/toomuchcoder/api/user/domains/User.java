@@ -32,14 +32,14 @@ import java.util.List;
 @Setter
 @ToString
 
-
 public class User {
     @Id @Column (name = "userid")
-    @GeneratedValue private long username;
+    @GeneratedValue private long userid;
+    @Column private @NotNull String username;
     @Column private @NotNull String name;
     @Column private @NotNull String password;
     @Column private @NotNull String birth;
-    @Column private @NotNull String phon;
+    @Column private @NotNull String phone;
 
     @OneToMany(mappedBy = "user")
     List<Meal> meals = new ArrayList<>();
@@ -57,6 +57,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     List<Post> posts = new ArrayList<>();
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    public List<Role>roles;
 
 
 
