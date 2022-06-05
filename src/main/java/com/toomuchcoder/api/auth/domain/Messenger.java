@@ -17,6 +17,6 @@ import lombok.Getter;
 @Getter
 @Builder
 public class Messenger {
-    private String Message,code,token;
+    private String message,code,token;
     private  int status;
 }

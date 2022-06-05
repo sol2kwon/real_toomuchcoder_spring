@@ -2,6 +2,7 @@ package com.toomuchcoder.api.user.services;
 
 import com.toomuchcoder.api.auth.domain.Messenger;
 import com.toomuchcoder.api.user.domains.User;
+import com.toomuchcoder.api.user.domains.UserDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -28,13 +29,13 @@ public interface UserService {
 
     List<User> findAll();
 
-    long count();
+    Messenger count();
 
-    void update(User user);
+    Messenger update(User user);
 
-    void delete(User user);
+    Messenger delete(User user);
 
-    void save(User user);
+    Messenger save(UserDTO user);
 
     Optional<User> findById(String userid);
 

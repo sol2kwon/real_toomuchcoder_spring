@@ -1,11 +1,14 @@
 package com.toomuchcoder.api.user.controllers;
 
+import com.toomuchcoder.api.auth.domain.Messenger;
 import com.toomuchcoder.api.user.domains.User;
+import com.toomuchcoder.api.user.domains.UserDTO;
 import com.toomuchcoder.api.user.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,22 +51,20 @@ public class UserController {
         return service.findAll(pageable);
     }
     @GetMapping("/count")
-    public long count() {
-        return service.count();
+    public ResponseEntity<Messenger> count() {
+        return ResponseEntity.ok(service.count());
     }
     @PutMapping("/update")
-    public String update(@RequestBody User user) {
-        service.update(user);
-        return "";
+    public ResponseEntity<Messenger> update(@RequestBody User user) {
+        return ResponseEntity.ok( service.update(user));
     }
     @DeleteMapping("/delete")
-    public String delete(User user) {
-        service.delete(user);
-        return "";
+    public ResponseEntity<Messenger> delete(User user) {
+        return ResponseEntity.ok(service.delete(user));
 
     }
     @PostMapping("/join")
-    public String save(@RequestBody User user) {
+    public String save(@RequestBody UserDTO user) {
         service.save(user);
         return "";
     }

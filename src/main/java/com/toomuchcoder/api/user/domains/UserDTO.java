@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * packageName: com.toomuchcoder.api.user.domains.controllers
@@ -21,10 +22,13 @@ import javax.validation.constraints.NotNull;
 @Component @Data
 public class UserDTO {
     @ApiModelProperty(position = 1) private long userid;
-    @ApiModelProperty(position = 2) private String username;
-    @ApiModelProperty(position = 3) private String name;
-    @ApiModelProperty(position = 4) private String password;
-    @ApiModelProperty(position = 5) private String birth;
-    @ApiModelProperty(position = 6) private String phone;
+    @ApiModelProperty(position = 2) String username;
+    @ApiModelProperty(position = 3) String name;
+    @ApiModelProperty(position = 4) String password;
+    @ApiModelProperty(position = 5) String birth;
+    @ApiModelProperty(position = 6) String phone;
+    @ApiModelProperty(position = 7) private String time;
+    @ApiModelProperty(position = 8) private String token;
+    @ApiModelProperty(position = 9) private List<Role> roles;
 
 }

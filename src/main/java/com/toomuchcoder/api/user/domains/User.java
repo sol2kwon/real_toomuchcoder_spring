@@ -40,6 +40,8 @@ public class User {
     @Column private @NotNull String password;
     @Column private @NotNull String birth;
     @Column private @NotNull String phone;
+    @Column(name = "time") private @NotNull String time;
+
 
     @OneToMany(mappedBy = "user")
     List<Meal> meals = new ArrayList<>();

@@ -34,6 +34,6 @@ interface UserCustomRepository {
 }
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
-    List<User> findByUserName(String username);
+    Optional<User> findByUserName(String username);
 }
 
