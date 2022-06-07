@@ -1,6 +1,8 @@
 package com.toomuchcoder.api.user.services;
 
+import com.toomuchcoder.api.auth.config.AuthProvider;
 import com.toomuchcoder.api.auth.domain.Messenger;
+import com.toomuchcoder.api.auth.exeption.SecurityRuntimeException;
 import com.toomuchcoder.api.user.domains.Role;
 import com.toomuchcoder.api.user.domains.User;
 import com.toomuchcoder.api.user.domains.UserDTO;
@@ -10,14 +12,16 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.security.AuthProvider;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.toomuchcoder.api.Lambda.Lambda.longParse;
 import static com.toomuchcoder.api.Lambda.Lambda.string;
 
 /**
@@ -36,13 +40,30 @@ import static com.toomuchcoder.api.Lambda.Lambda.string;
 public class UserServiceImpl implements UserService {
     private final UserRepository repository;
     private final PasswordEncoder encoder;
-    private final AuthProvider provider;
-    private final ModelMapper modelMapper;
-
+    private final AuthProvider provider;//토큰 사용
+    private final ModelMapper modelMapper;//맵핑
 
     @Override
-    public String login(User user) {
-        return null;
+    public UserDTO login(UserDTO paramUser) {
+        try {
+            UserDTO returnUser = new UserDTO();
+            String username = paramUser.getUsername();
+            User findUser = repository.findByUserName(username).orElse(null);
+            if (findUser != null) {
+                boolean checkPassword = encoder.matches(paramUser.getPassword(), findUser.getPassword());
+                if (checkPassword) {
+                    returnUser = modelMapper.map(findUser, UserDTO.class);
+                    String token = provider.createToken(username, returnUser.getRoles());
+                    returnUser.setToken(token);
+                } else {
+                    String token = "FAILURE";
+                    returnUser.setToken(token);
+                }
+            }
+            return returnUser;
+        } catch (Exception e) {
+            throw new SecurityRuntimeException("유효하지 않은 아이디/비밀번호", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
     }
 
     @Override
@@ -52,6 +73,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Messenger count() {
+
         return Messenger.builder().message(string(repository.count())).build();
     }
 
@@ -70,7 +92,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Messenger save(UserDTO user) {
         String result = "";
-        if (repository.findByUserName(user.getUsername()).isEmpty()){
+        if (repository.findByUserName(user.getUsername()).isEmpty()) {
             List<Role> list = new ArrayList<>();
             list.add(Role.USER);
             repository.save(User.builder()
@@ -82,22 +104,22 @@ public class UserServiceImpl implements UserService {
                     .password(encoder.encode(user.getPassword()))
                     .roles(list).build());
             result = "SUCCESS";
-        }else{
+        } else {
             result = "FAIL";
         }
         return Messenger.builder().message(result).build();
-
-
     }
 
     @Override
     public Optional<User> findById(String userid) {
-        return Optional.empty();
+        return repository.findById(0L);
     }
 
     @Override
-    public boolean existsById(String userid) {
-        return false;
+    public Messenger existsById(String userid) {
+        return repository.existsById(longParse(userid))
+                ? Messenger.builder().message("EXIST").build()
+                : Messenger.builder().message("NOT_EXIST").build();
     }
 
     @Override
@@ -111,12 +133,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findByUserName(String username) {
+    public Optional<User> findByUserName(String username) {
         return null;
     }
 
     @Override
     public Messenger logout() {
-        return null;
+       return Messenger.builder().build();
     }
+
 }

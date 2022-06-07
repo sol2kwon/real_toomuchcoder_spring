@@ -25,13 +25,13 @@ import java.util.Optional;
  **/
 
 public interface UserService {
-    String login(User user);
-
     List<User> findAll();
 
-    Messenger count();
+    List<User> findAll(Sort sort);
 
-    Messenger update(User user);
+    Page<User> findAll(Pageable pageable);
+
+    Messenger count();
 
     Messenger delete(User user);
 
@@ -39,14 +39,15 @@ public interface UserService {
 
     Optional<User> findById(String userid);
 
-    boolean existsById(String userid);
+    Messenger existsById(String userid);
 
-    List<User> findAll(Sort sort);
+    UserDTO login(UserDTO paramUser);
 
-    Page<User> findAll(Pageable pageable);
+    Messenger update(User user);
 
-    //custom
-    List<User> findByUserName(String username);//??레파짓토리랑 똑같아야하는거 아님??
+    //커스텀
+    Optional<User> findByUserName(String username);
+
     Messenger logout();
 
 

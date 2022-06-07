@@ -27,10 +27,12 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements UserDetailsService {
-
+    private final UserRepository repository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        Optional<User> user = Optional.ofNullable(repository.findByUserName(username))
+                .orElseThrow(()->new UsernameNotFoundException(username+"에 해당하는 객체가 존재하지 않습니다."));
+        return Auth.build(user.get());
     }
 }
