@@ -1,5 +1,9 @@
 package com.toomuchcoder.api.post.repositories;
 
+import com.toomuchcoder.api.post.domains.Post;
+import com.toomuchcoder.api.user.domains.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 /**
  * packageName: com.toomuchcoder.api.post.repositories
  * fileName        : PostRepository.java
@@ -11,5 +15,5 @@ package com.toomuchcoder.api.post.repositories;
  * =============================================
  * 2022-06-03         solyikwon      최초 생성
  **/
-public class PostRepository {
+public interface PostRepository extends JpaRepository<Post,Long> {
 }

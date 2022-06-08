@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
         try {
             UserDTO returnUser = new UserDTO();
             String username = paramUser.getUsername();
-            User findUser = repository.findByUserName(username).orElse(null);
+            User findUser = repository.findByUsername(username).orElse(null);
             if (findUser != null) {
                 boolean checkPassword = encoder.matches(paramUser.getPassword(), findUser.getPassword());
                 if (checkPassword) {
@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Messenger save(UserDTO user) {
         String result = "";
-        if (repository.findByUserName(user.getUsername()).isEmpty()) {
+        if (repository.findByUsername(user.getUsername()).isEmpty()) {
             List<Role> list = new ArrayList<>();
             list.add(Role.USER);
             repository.save(User.builder()
@@ -133,7 +133,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByUserName(String username) {
+    public Optional<User> findByUsername(String username) {
         return null;
     }
 

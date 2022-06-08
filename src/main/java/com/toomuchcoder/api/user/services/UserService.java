@@ -46,7 +46,7 @@ public interface UserService {
     Messenger update(User user);
 
     //커스텀
-    Optional<User> findByUserName(String username);
+    Optional<User> findByUsername(String username);
 
     Messenger logout();
 
